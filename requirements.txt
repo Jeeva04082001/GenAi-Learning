@@ -11,4 +11,6 @@ faiss-cpu
 pypdf
 langchain-community
 langchain-google-genai
+langchain 
+langchain-groq
 

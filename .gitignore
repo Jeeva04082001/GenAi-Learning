@@ -30,6 +30,10 @@ Thumbs.db
 # Ignore PDF files
 *.pdf
 
+.ipynb_checkpoints/
 
-
+# Memory database files
+*.db
+*.db-shm
+*.db-wal
 

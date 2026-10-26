@@ -1,0 +1,258 @@
+# LLM Concepts – Learning Notes
+
+## 1. Does an LLM Have Memory?
+
+An LLM (Large Language Model) does not automatically remember all our previous conversations permanently.
+
+When we ask a question, the LLM generates a response based on the input provided to it.
+
+When we ask a follow-up question, the application usually sends the relevant previous conversation along with the new question. This helps the LLM understand the context and generate an appropriate response.
+
+### Example
+
+**Conversation:**
+
+User: What is Python?
+AI: Python is a high-level programming language.
+
+User: What are its advantages?
+AI: Python is easy to learn, readable, and supports many libraries.
+
+Here, the AI understands that "its" refers to Python because the previous conversation is included in the input.
+
+### How Does It Work in the Background?
+
+1. The user sends a question.
+2. The LLM processes the input and generates a response.
+3. The user sends a follow-up question.
+4. The application sends the new question along with relevant conversation history.
+5. The LLM processes the combined input and generates the next response.
+
+**Important:** The LLM itself does not necessarily store the conversation permanently. The application can maintain conversation history and send it back to the LLM when needed.
+
+---
+
+## 2. Tokenization
+
+Tokenization is the process of splitting text into smaller units called tokens.
+
+A token can be:
+- A complete word
+- Part of a word
+- A punctuation mark
+- Another text unit, depending on the tokenizer
+
+### Example
+
+Input sentence:
+
+"I am learning Generative AI."
+
+A tokenizer might split it into tokens such as:
+
+"I" | " am" | " learning" | " Generative" | " AI" | "."
+
+The exact tokens depend on the tokenizer.
+
+Therefore, the number of words and the number of tokens are not always the same.
+
+For example:
+- Number of words: 5
+- Number of tokens: 6 in the illustrative split above
+
+A sentence containing 9 words might produce 12 tokens, depending on the text and tokenizer.
+
+### Why Is Tokenization Important?
+
+LLMs process text as tokens rather than directly processing complete sentences as humans do.
+
+Tokens are important because:
+- Input length is measured in tokens.
+- Output length is measured in tokens.
+- Context window limits are generally defined in tokens.
+- The number of tokens can affect API usage costs.
+
+**Note:** Tokenizers are designed to represent text efficiently, but they do not necessarily minimize the token count for every sentence.
+
+---
+
+## 3. Context Window
+
+A context window is the maximum amount of information an LLM can process at one time.
+
+It may contain:
+- System instructions
+- Previous user messages
+- Previous AI responses
+- The current user message
+- Other relevant information supplied to the model
+- Space needed for the generated response
+
+### Example
+
+Imagine that an application maintains a conversation containing 100 user prompts.
+
+To answer the 100th prompt, it might send:
+- Previous 99 user prompts
+- Previous 99 AI responses
+- The 100th user prompt
+
+The total input may become very large.
+
+If the input exceeds the model's context window, the application must reduce or otherwise manage the information supplied to the model.
+
+Depending on the application, older messages might be removed, summarized, or replaced with relevant information.
+
+The model cannot directly use conversation details that are no longer included in its available context unless those details are supplied again through another mechanism.
+
+### Important Point
+
+The context window is not the same as permanent memory.
+
+- **Context window:** Information available to the model for the current processing task.
+- **Persistent memory:** Information stored separately and potentially retrieved in future interactions.
+
+---
+
+## 4. Context Compaction
+
+Context compaction is the process of reducing a long conversation into a shorter representation while preserving the information needed for future interactions.
+
+Instead of repeatedly sending the entire conversation history, the application extracts and retains the important details.
+
+### Why Do We Need Context Compaction?
+
+As a conversation continues:
+- The number of messages increases.
+- The input contains more tokens.
+- Processing the full history can become expensive.
+- The conversation may approach the context window limit.
+
+Context compaction helps reduce the input size while preserving important information.
+
+### Example: Invoice Approval System
+
+Consider the following conversation:
+
+User: I need help with an invoice approval system.
+
+AI: Sure, can you explain the issue?
+
+User: The invoice ID is 12345.
+
+AI: Okay.
+
+User: This invoice is pending for more than 10 days.
+
+AI: Got it.
+
+User: It violates our internal policy.
+
+AI: Understood.
+
+User: Please escalate this.
+
+Instead of sending the entire conversation repeatedly, the application can summarize the important information.
+
+**Compacted Context:**
+
+- User goal: Escalate the delayed invoice.
+- Invoice ID: 12345.
+- Issue: Pending for more than 10 days.
+- Constraint: Violates internal policy.
+- Required action: Escalation.
+
+The application can send this compacted context along with the latest user message.
+
+The LLM can then understand the issue without needing the entire original conversation.
+
+### How Does Context Compaction Work?
+
+1. The application maintains the conversation history.
+2. The conversation grows over time.
+3. The application identifies important information from the conversation.
+4. It summarizes or compresses the conversation into a shorter representation.
+5. The application retains essential details, such as IDs, user goals, constraints, and pending actions.
+6. The compacted context is supplied to the LLM when generating the next response.
+
+**Important:** Context compaction should preserve critical details. If important information is omitted from the summary, the model may produce an incorrect or incomplete response.
+
+---
+
+## 5. Difference Between Context Window and Context Compaction
+
+| Context Window | Context Compaction |
+|---|---|
+| The maximum amount of information the model can process at one time. | A technique for reducing the amount of conversation history. |
+| It is a model capacity limitation. | It is a context management technique. |
+| The input must fit within the available context limit. | It helps keep the input smaller and preserve important details. |
+| Example: A model supports a context window of a certain number of tokens. | Example: A long conversation is summarized into a few important points. |
+
+---
+
+## 6. How These Concepts Work Together
+
+Consider an AI assistant that handles customer support requests.
+
+1. The user asks a question.
+2. The tokenizer converts the text into tokens.
+3. The application sends the input to the LLM.
+4. The LLM processes the available context and generates a response.
+5. The user asks follow-up questions.
+6. The application includes relevant conversation history in subsequent requests.
+7. As the conversation grows, context compaction can summarize older messages.
+8. The tokenizer converts the compacted input into tokens.
+9. The LLM processes the updated context and generates a response.
+
+This approach helps an AI assistant handle longer conversations without repeatedly sending every message in full.
+
+---
+
+## 7. Interview Questions and Answers
+
+### Q1. Does an LLM have memory?
+
+An LLM does not automatically retain every previous conversation permanently. Applications can maintain conversation history and include relevant messages in subsequent requests. Persistent memory can also be implemented using external storage.
+
+### Q2. What is tokenization?
+
+Tokenization is the process of converting text into smaller units called tokens. These tokens are the units processed by an LLM.
+
+### Q3. What is a context window?
+
+A context window is the maximum amount of information a model can process at one time, measured in tokens.
+
+### Q4. What happens when a conversation exceeds the context window?
+
+The application must manage the input to fit within the available context. It might remove older messages, summarize the conversation, retrieve relevant information, or use another context management strategy.
+
+### Q5. What is context compaction?
+
+Context compaction is the process of summarizing or compressing a long conversation while preserving essential information. It reduces the amount of context that needs to be sent to the LLM.
+
+### Q6. Why is context compaction useful?
+
+It helps manage long conversations, reduce repeated input, control token usage, and preserve important information within the model's context window.
+
+### Q7. What is the difference between conversation history and persistent memory?
+
+Conversation history contains messages from an interaction. Persistent memory stores selected information separately so it can potentially be retrieved in future interactions.
+
+---
+
+## Quick Revision
+
+- **LLM Memory:** The ability of an application or system to retain and reuse information across interactions.
+- **Tokenization:** Converting text into tokens.
+- **Context Window:** The maximum amount of information the model can process at one time.
+- **Context Compaction:** Reducing a long conversation to a shorter representation while retaining important details.
+- **Conversation History:** Previous user messages and AI responses.
+- **Persistent Memory:** Information stored separately and retrieved when needed.
+
+
+
+
+
+
+
+
