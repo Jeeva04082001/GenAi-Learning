@@ -13,4 +13,6 @@ langchain-community
 langchain-google-genai
 langchain 
 langchain-groq
+sentence-transformers
+langchain_chroma
 
