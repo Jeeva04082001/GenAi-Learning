@@ -37,3 +37,7 @@ Thumbs.db
 *.db-shm
 *.db-wal
 
+# ChromaDB generated files
+**/chroma_db/
+**/chroma.sqlite3
+**/*.bin
