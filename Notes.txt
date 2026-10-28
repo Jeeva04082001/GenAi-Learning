@@ -627,6 +627,7 @@ Answer evaluation: Did the LLM generate the correct answer using that informatio
 
 =================================================================================
 
+what is chunking and 
 Why is chunking important in RAG?
 
 there is a limit for input contenxt in all LLM but in Rag we overcome the input context limit by using chunking process.
@@ -640,6 +641,37 @@ Understand the small difference
 - Chunking: Splitting a large document into smaller pieces.
 - Retrieval: Selecting the chunks relevant to the user's question.
 
+=================================================================================
+
+
+1.what is chunking and  Why is chunking important in RAG?
+[ because is easier to search,it provides better accuracy,works within the token limits, when the user asking question the retrieval will be more faster]
+chunking is nothing but taking the document breaking into multiple sub parts so that it provides better accuracy and  retrieve the  information faster and works within the token limits and easier to search from the entire document
+
+2. what exactly is embedding and why it is important?
+Dense numerical representation or vector representation of a word or a scentence or document or a book
+embedding is nothing but converting a document into a numbers.Dense representaion should represent the meaning and the context of a particular word or a scentence or a document or a book
+
+why?
+so, we convert the text into numbers(vectors) that represent meaning and understands context
+---------------
+similar items will always be colose to each other 
+
+3.what is vector DB?
+
+A specialized Database that stores Vector embeddings
+
+Why Vector DB?
+It finds the most relevant information based on meaning , not exact keywords.
+This is critical for natural lenaguage search, documents, GAQs and Knowledge bases
+
+Example : Company Policy Search
+User asks: Can i work from home if i am sick?
+
+understand the meaning of the question and finds semantically similar content.
+
+SQL/Traditional DB:
+searches for exact keywords. if the exact words are not found , it may return nothing or irrelevant results.
 =================================================================================
 
 A Vector Database is a database that stores vector embeddings and helps us find information based on meaning or similarity.

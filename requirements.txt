@@ -15,4 +15,4 @@ langchain
 langchain-groq
 sentence-transformers
 langchain_chroma
-
+chromadb
